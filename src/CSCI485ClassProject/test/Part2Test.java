@@ -12,6 +12,7 @@ import CSCI485ClassProject.models.Record;
 import CSCI485ClassProject.models.TableMetadata;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.After;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -457,5 +458,11 @@ public class Part2Test {
       assertEquals(StatusCode.SUCCESS, records.commitCursor(cursor));
     }
     System.out.println("Test7 passed!");
+  }
+
+  @After 
+  public void finish() {
+    tableManager.closeDatabase();
+    records.closeDatabase();
   }
 }

@@ -1,5 +1,9 @@
 package CSCI485ClassProject;
 
+import java.util.List;
+
+import com.apple.foundationdb.Transaction;
+
 import CSCI485ClassProject.models.ComparisonOperator;
 import CSCI485ClassProject.models.Record;
 
@@ -135,4 +139,8 @@ public interface Records {
    * @return StatusCode
    */
   StatusCode deleteDataRecord(String tableName, String[] attrNames, Object[] attrValues);
+
+  public void closeDatabase();
+
+  public List<String> getPrimaryKeys(Transaction tx, String tableName);
 }

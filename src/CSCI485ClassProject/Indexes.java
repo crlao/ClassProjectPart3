@@ -1,5 +1,12 @@
 package CSCI485ClassProject;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.apple.foundationdb.Database;
+import com.apple.foundationdb.Transaction;
+
+import CSCI485ClassProject.fdb.FDBHelper;
 import CSCI485ClassProject.models.IndexType;
 
 public interface Indexes {
@@ -23,4 +30,26 @@ public interface Indexes {
    * @return StatusCode
    */
   StatusCode dropIndex(String tableName, String attrName);
+  
+  public void closeDatabase();
+
+  public static List<String> getIndexPath(Transaction tx, String tableName, String attrName){
+    List<String> indexPath = new ArrayList<>();
+    indexPath.add(tableName);
+    indexPath.add(DBConf.TABLE_INDEX_STORE);
+    indexPath.add(attrName);
+
+    String[] types = {"hash", "b+"};
+
+    for (String type : types) {
+      indexPath.add(type);
+      if (FDBHelper.doesSubdirectoryExists(tx, indexPath)) {
+        return indexPath;
+      }
+      indexPath.remove(indexPath.size()-1);
+    }
+
+    indexPath.clear();
+    return indexPath;
+  }
 }

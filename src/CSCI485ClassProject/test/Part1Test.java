@@ -10,6 +10,7 @@ import CSCI485ClassProject.TableManagerImpl;
 import CSCI485ClassProject.models.TableMetadata;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.After;
 
 import java.util.HashMap;
 
@@ -239,5 +240,10 @@ public class Part1Test {
     HashMap<String, TableMetadata> tables = tableManager.listTables();
     assertEquals(1, tables.size());
     assertEquals(employeeTable, tables.get(EmployeeTableName));
+  }
+
+  @After 
+  public void finish() {
+    tableManager.closeDatabase();
   }
 }

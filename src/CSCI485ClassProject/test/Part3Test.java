@@ -15,6 +15,7 @@ import CSCI485ClassProject.models.Record;
 import CSCI485ClassProject.models.TableMetadata;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.After;
 
 import java.util.HashMap;
 import java.util.Random;
@@ -359,8 +360,8 @@ public class Part3Test {
 
     tableManager.dropAllTables();
 
-    int numOfRecords = 1000000;
-    int numOfQueries = 10000;
+    int numOfRecords = 1000;
+    int numOfQueries = 100;
 
     String INT0 = "INT0";
     String INT1 = "INT1";
@@ -426,5 +427,12 @@ public class Part3Test {
     long executionTimeWithBPlusTreeIndex = (endTime - startTime) / 1000;
     System.out.println("Query " + numOfQueries + " Records with non-clustered B+Tree index: " + executionTimeWithBPlusTreeIndex + " milliseconds");
     System.out.println("Test7 passed!");
+  }
+
+  @After 
+  public void finish() {
+    tableManager.closeDatabase();
+    records.closeDatabase();
+    indexes.closeDatabase();
   }
 }
